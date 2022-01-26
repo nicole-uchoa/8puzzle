@@ -1,0 +1,59 @@
+
+from numpy.random import default_rng
+
+from checagem import Checagem
+from movimento import Movimento
+
+check = Checagem()
+mov = Movimento()
+
+class Matriz:
+
+    def gera_matriz(self):
+        #gera matriz aleatória entre 0 e 8 
+        rng = default_rng()
+        puzzle = rng.choice(range(0,9), size=(3, 3), replace=False)
+
+        return puzzle
+
+    def tem_solucao(self, puzzle):
+        ninversao = 0
+        count = 0
+
+        #transforma matriz em lista
+        puzzle_list = puzzle.flatten().tolist()
+
+        #percorre a lista e calcula quantas inversões de valores existem
+        for n in puzzle_list:
+            for i in range(count,8):
+                valor = puzzle_list[i+1]
+                if n > valor and valor != 0:
+                    ninversao += 1
+            count += 1
+                    
+        if (ninversao % 2) != 0:
+            return False
+        else: return True
+
+    def matriz_movimentada(self, movimento, matriz):
+
+        if movimento == 0:
+            nova_matriz = mov.mov_up(matriz)
+        elif movimento == 1:
+            nova_matriz = mov.mov_down(matriz)
+        elif movimento == 2:
+            nova_matriz = mov.mov_right(matriz)
+        elif movimento == 3:
+            nova_matriz = mov.mov_left(matriz)
+
+        print("\n_____8-PUZZLE_____\n")
+        self.print_matriz(nova_matriz)
+        #print(f"\nMovimentos: {g}", g)
+
+        return nova_matriz
+
+    def print_matriz(self, matriz):
+        for row in matriz:
+            print ('  '.join(map(str, row)))
+    
+
