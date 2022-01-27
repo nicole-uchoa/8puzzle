@@ -24,7 +24,8 @@ if m.tem_solucao(puzzle):
     while c.check_ideal(puzzle) == False:
         #checar as possibilidades de movimento
         movimento = c.check_movimento(puzzle, g)
-        puzzle = m.matriz_movimentada(movimento, puzzle)
+        puzzle, puzzle_original = m.movimenta_matriz(movimento, puzzle)
+        
         c.check_ideal(puzzle)
         g += 1
 

@@ -32,27 +32,3 @@ class Node:
 
 
 
-
-# def euclidianCost(puzzle): # calcula distancia euclidiana
-#     cost = 0
-#     for row in range(len(puzzle)):
-#         for col in range(len(puzzle[0])):
-#             pos = get_pos(END, puzzle[row][col])
-#             cost += abs(row - pos[0]) + abs(col - pos[1])
-#     return cost
-
-
-# def get_pos(current_state, element):
-#     for row in range(len(current_state)):
-#         if element in current_state[row]:
-#             return (row, current_state[row].index(element))
-
-# print(euclidianCost(puzzle))
-
-
-
-
-
-#def possible_mov():
-
-
