@@ -1,3 +1,7 @@
+# Fontes:
+# - https://www.linkedin.com/pulse/solving-8-puzzle-using-algorithm-python-ajinkya-sonawane/
+# - https://ipvs.informatik.uni-stuttgart.de/mlr/marc/teaching/14-ArtificialIntelligence/14-AI-script.pdf 
+
 import numpy as np 
 from matriz import Matriz
 from movimento import Movimento
@@ -8,9 +12,12 @@ m = Matriz()
 mov = Movimento()
 #gera matriz aleatória
 #puzzle = m.gera_matriz()
+# [[1, 2, 3], 
+#                  [0, 4, 6],
+#                  [7, 5, 8]]
 puzzle = np.array([[1, 2, 3], 
-                 [0, 4, 6],
-                 [7, 5, 8]])
+                 [4, 0, 5],
+                 [6, 7, 8]])
 
 if m.tem_solucao(puzzle): 
     #checar se está certa ou não 

@@ -80,8 +80,8 @@ class Movimento:
         numero_trocado = matriz[indexRow-1][indexCol]
         matriz[indexRow][indexCol] = numero_trocado
         matriz[indexRow-1][indexCol] = 0
-
-        return matriz
+        matriz_original = self.mov_down(matriz)
+        return matriz, matriz_original
 
     def mov_down(self, matriz):
         countC = 0
@@ -100,7 +100,10 @@ class Movimento:
         matriz[indexRow][indexCol] = numero_trocado
         matriz[indexRow+1][indexCol] = 0
 
-        return matriz
+        matriz_original = self.mov_down(matriz)
+
+        return matriz, matriz_original
+        
 
     def mov_right(self, matriz):
         countC = 0
@@ -119,7 +122,8 @@ class Movimento:
         matriz[indexRow][indexCol] = numero_trocado
         matriz[indexRow][indexCol+1] = 0
 
-        return matriz
+        matriz_original = self.mov_down(matriz)
+        return matriz, matriz_original
     
     def mov_left(self, matriz):
         countC = 0
@@ -138,7 +142,9 @@ class Movimento:
         matriz[indexRow][indexCol] = numero_trocado
         matriz[indexRow][indexCol-1] = 0
 
-        return matriz
+        matriz_original = self.mov_down(matriz)
+        return matriz, matriz_original
+        
     ############################
     ##### PONTOS F GERADOS #####
     ############################
@@ -178,12 +184,7 @@ class Movimento:
         matriz_original = self.mov_right(nova_matriz)
         f = no.f(no.g, score_h)
         return f    
-    # def fake_move_up(self, matriz):
-    #     nova_matriz = self.mov_up(matriz)
-    #     score_g = no.sum_score_g(0)
-    #     score_h = no.get_score_h(nova_matriz)
-    #     matriz_original = self.mov_down(nova_matriz)
-        
+         
 
 # countC = 0
 # for row in matriz:

@@ -30,13 +30,13 @@ class Matriz:
                 if n > valor and valor != 0:
                     ninversao += 1
             count += 1
-                    
+        #se o numero de inversões for par é solucionável, se for ímpar não é solucionável                  
         if (ninversao % 2) != 0:
             return False
         else: return True
 
     def matriz_movimentada(self, movimento, matriz):
-
+        # checa qual movimento deve ser feito e executa o movimento
         if movimento == 0:
             nova_matriz = mov.mov_up(matriz)
         elif movimento == 1:
@@ -46,6 +46,7 @@ class Matriz:
         elif movimento == 3:
             nova_matriz = mov.mov_left(matriz)
 
+        # printa o puzzle depois do movimento
         print("\n_____8-PUZZLE_____\n")
         self.print_matriz(nova_matriz)
         #print(f"\nMovimentos: {g}", g)
