@@ -8,6 +8,8 @@ check = Checagem()
 mov = Movimento()
 
 class Matriz:
+    def __init__(self):
+        self.lista_matriz = []
 
     def gera_matriz(self):
         #gera matriz aleatória entre 0 e 8 
@@ -38,23 +40,28 @@ class Matriz:
     def movimenta_matriz(self, movimento, matriz):
         # checa qual movimento deve ser feito e executa o movimento
         if movimento == 0:
-            nova_matriz, matriz_original = mov.mov_up(matriz)
+            nova_matriz = mov.mov_up(matriz)
         elif movimento == 1:
-            nova_matriz, matriz_original = mov.mov_down(matriz)
+            nova_matriz = mov.mov_down(matriz)
         elif movimento == 2:
-            nova_matriz, matriz_original = mov.mov_right(matriz)
+            nova_matriz = mov.mov_right(matriz)
         elif movimento == 3:
-            nova_matriz, matriz_original = mov.mov_left(matriz)
-
+            nova_matriz = mov.mov_left(matriz)
+        
         # printa o puzzle depois do movimento
         print("\n_____8-PUZZLE_____\n")
         self.print_matriz(nova_matriz)
         #print(f"\nMovimentos: {g}", g)
 
-        return nova_matriz, matriz_original
+        return nova_matriz
 
     def print_matriz(self, matriz):
         for row in matriz:
             print ('  '.join(map(str, row)))
     
-   
+    #faz uma lista com as todas as matrizes
+    def backup_matriz(self, matriz_original):
+        list_matriz = matriz_original.flatten().tolist()
+        self.lista_matriz.append(list_matriz)
+
+        return self.lista_matriz

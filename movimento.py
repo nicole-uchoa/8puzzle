@@ -1,4 +1,3 @@
-from adicionais import add_matriz_lista_matrizes, check_matrizes_iguais
 from node import Node
 
 class Movimento:        
@@ -6,7 +5,7 @@ class Movimento:
     ###############################################
     ##### VERIFICAR SE O MOVIMENTO É POSSÍVEL #####
     ###############################################    
-    def up(self, matriz): # se o índice da linha for diferente de 0 o espaço em branco (zero) pode ser movido para cima
+    def up(self, matriz, lista_matrizes): # se o índice da linha for diferente de 0 o espaço em branco (zero) pode ser movido para cima
         countRow = 0
         for row in matriz:
             for elemento in row:
@@ -14,23 +13,12 @@ class Movimento:
                     indexRow = countRow
             countRow += 1
         
-        if indexRow != 0:
-            matriz_atual, matriz_original = self.mov_up(matriz)
-            # adicionar matriz original na lista de matrizes => backup matrizes
-            add_matriz_lista_matrizes(matriz_original)
-
-            # desfazendo o movimento 
-            self.mov_down(matriz_atual)
-
-            # verificar se matriz existe na lista de matrizes
-            if check_matrizes_iguais(matriz_atual): 
-                return False
-            else: 
-                return True             
+        if indexRow != 0: 
+            return True             
         else: 
             return False
 
-    def down(self, matriz): # se o índice da linha for diferente de 2 o espaço em branco (zero) pode ser movido para baixo
+    def down(self, matriz, lista_matrizes): # se o índice da linha for diferente de 2 o espaço em branco (zero) pode ser movido para baixo
         countRow = 0
         for row in matriz:
             for elemento in row:
@@ -39,22 +27,11 @@ class Movimento:
             countRow += 1
         
         if indexRow != 2:
-            matriz_atual, matriz_original = self.mov_down(matriz)
-            # adicionar matriz original na lista de matrizes => backup matrizes
-            add_matriz_lista_matrizes(matriz_original)
-            
-            # desfazendo o movimento 
-            self.mov_up(matriz_atual)
-
-            # verificar se matriz existe na lista de matrizes
-            if check_matrizes_iguais(matriz_atual): 
-                return False
-            else: 
-                return True             
+            return True             
         else: 
             return False
 
-    def left(self, matriz): # se o índice da coluna for diferente de 0 o espaço em branco (zero) pode ser movido para cima
+    def left(self, matriz, lista_matrizes): # se o índice da coluna for diferente de 0 o espaço em branco (zero) pode ser movido para cima
         countC = 0
         for row in matriz:
             while countC < 3:
@@ -65,22 +42,11 @@ class Movimento:
             countC = 0
         
         if indexCol != 0:
-            matriz_atual, matriz_original = self.mov_left(matriz)
-            # adicionar matriz original na lista de matrizes => backup matrizes
-            add_matriz_lista_matrizes(matriz_original)
-            
-            # desfazendo o movimento 
-            self.mov_right(matriz_atual)
-
-            # verificar se matriz existe na lista de matrizes
-            if check_matrizes_iguais(matriz_atual): 
-                return False
-            else: 
-                return True             
+            return True             
         else: 
             return False
 
-    def right(self, matriz): # se o índice da coluna for diferente de 0 o espaço em branco (zero) pode ser movido para cima
+    def right(self, matriz, lista_matrizes): # se o índice da coluna for diferente de 0 o espaço em branco (zero) pode ser movido para cima
         countC = 0
         for row in matriz:
             while countC < 3:
@@ -91,18 +57,7 @@ class Movimento:
             countC = 0
 
         if indexCol != 2:
-            matriz_atual, matriz_original = self.mov_right(matriz)
-            # adicionar matriz original na lista de matrizes => backup matrizes
-            add_matriz_lista_matrizes(matriz_original)
-            
-            # desfazendo o movimento 
-            self.mov_left(matriz_atual)
-
-            # verificar se matriz existe na lista de matrizes
-            if check_matrizes_iguais(matriz_atual): 
-                return False
-            else: 
-                return True             
+            return True             
         else: 
             return False
 
@@ -126,9 +81,8 @@ class Movimento:
         numero_trocado = matriz[indexRow-1][indexCol]
         matriz[indexRow][indexCol] = numero_trocado
         matriz[indexRow-1][indexCol] = 0
-        matriz_original, nsei = self.mov_down(matriz)
 
-        return matriz, matriz_original
+        return matriz
 
     def mov_down(self, matriz):
         countC = 0
@@ -147,9 +101,8 @@ class Movimento:
         matriz[indexRow][indexCol] = numero_trocado
         matriz[indexRow+1][indexCol] = 0
 
-        matriz_original, nsei = self.mov_up(matriz)
 
-        return matriz, matriz_original
+        return matriz
         
 
     def mov_right(self, matriz):
@@ -169,8 +122,7 @@ class Movimento:
         matriz[indexRow][indexCol] = numero_trocado
         matriz[indexRow][indexCol+1] = 0
 
-        matriz_original, nsei = self.mov_left(matriz)
-        return matriz, matriz_original
+        return matriz
     
     def mov_left(self, matriz):
         countC = 0
@@ -189,8 +141,7 @@ class Movimento:
         matriz[indexRow][indexCol] = numero_trocado
         matriz[indexRow][indexCol-1] = 0
 
-        matriz_original, nsei = self.mov_right(matriz)
-        return matriz, matriz_original
+        return matriz
 
     ############################
     ##### PONTOS F GERADOS #####

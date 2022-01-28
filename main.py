@@ -12,20 +12,23 @@ m = Matriz()
 mov = Movimento()
 #gera matriz aleatória
 #puzzle = m.gera_matriz()
-# [[1, 2, 3], 
+#                  [[1, 2, 3], 
 #                  [0, 4, 6],
 #                  [7, 5, 8]]
-puzzle = np.array([[1, 2, 3], 
-                 [4, 0, 5],
-                 [6, 7, 8]])
+#    [[0, 1, 3], 
+#    [4, 2, 5],
+#    [7, 8, 6]]
+puzzle = np.array([[2, 8, 3], 
+                   [1, 6, 4],
+                   [7, 0, 5]])
 
 if m.tem_solucao(puzzle): 
     #checar se está certa ou não 
     while c.check_ideal(puzzle) == False:
         #checar as possibilidades de movimento
-        movimento = c.check_movimento(puzzle, g)
-        puzzle, puzzle_original = m.movimenta_matriz(movimento, puzzle)
-        
+        lista_matrizes = m.backup_matriz(puzzle)
+        movimento = c.check_movimento(puzzle, g, lista_matrizes)
+        novo_puzzle = m.movimenta_matriz(movimento, puzzle)
         c.check_ideal(puzzle)
         g += 1
 
