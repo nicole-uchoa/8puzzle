@@ -15,7 +15,7 @@ class Checagem():
     
     def check_movimento(self, matriz, g, lista_matrizes):
         self.list_valor = []
-
+        backup_list = []
         up = mov.up(matriz, lista_matrizes)
         down = mov.down(matriz, lista_matrizes)
         right = mov.right(matriz, lista_matrizes)
@@ -25,11 +25,19 @@ class Checagem():
 
         # 0: UP, 1: DOWN, 2: RIGHT, 3: LEFT
         movimento = self.retorna_movimento(self.list_valor)
+        if len(lista_matrizes) != 1:
+            for valor in self.list_valor:
+                backup_list.append(valor)
 
-        lista_novos_movimentos = self.teste_matriz_valida(movimento, matriz, lista_matrizes, self.list_valor)
-
-        if set(self.list_valor) !=  set(lista_novos_movimentos):
-            movimento = self.retorna_movimento(lista_novos_movimentos)
+            for item in range(3):
+                lista_novos_movimentos = self.teste_matriz_valida(movimento, matriz, lista_matrizes, self.list_valor)
+                if lista_novos_movimentos == [0, 0, 0, 0]:
+                    movimento = None
+                else:
+                    validacao = (backup_list == lista_novos_movimentos)
+                    if validacao == False:
+                        movimento = self.retorna_movimento(lista_novos_movimentos)
+                
 
         return movimento #CHECAR MATRIZ
 
@@ -39,45 +47,66 @@ class Checagem():
         else:
             return False
 
-    def backup_matriz(self, matriz_original):
-       list_matriz = matriz_original.flatten().tolist()
-       self.lista_matrizes.append(list_matriz)
+    # def backup_matriz(self, matriz_original):
+    #    list_matriz = matriz_original.flatten().tolist()
+    #    self.lista_matrizes.append(list_matriz)
 
-       return self.lista_matrizes
+    #    return self.lista_matrizes
 
     def check_matrizes_iguais(self, matriz, lista_matrizes):
-        matriz = matriz.flatten().tolist()
+        matriz_em_lista = matriz.flatten().tolist()
 
-        if matriz in lista_matrizes: return True
+        if matriz_em_lista in lista_matrizes: return True
         else: return False
+
+    def check_zero_invalido(self, matriz, lista_matrizes):
+        countRow = 0
+        countC = 0
+        for row in matriz:
+            while countC < 3:
+                for elemento in row:
+                    if elemento == 0:
+                        indexCol = countC
+                        indexRow = countRow
+                    countC += 1
+            countRow += 1
+            countC = 0
+        for r in range(len(lista_matrizes)-1):
+            for c in range(len(lista_matrizes[r])-1):
+                if lista_matrizes[r][c] == matriz[indexRow][indexCol]:
+                    validade = True
+                else: 
+                    validade = False
+        
+        return validade
 
     def teste_matriz_valida(self, movimento, matriz, lista_matrizes, list_valor):
         if movimento == 0:
-            matriz_teste = mov.mov_up(matriz)
-            if self.check_matrizes_iguais(matriz, lista_matrizes):
+            mov.mov_up(matriz)
+            if self.check_matrizes_iguais(matriz, lista_matrizes) or self.check_zero_invalido(matriz, lista_matrizes):
                 list_valor[movimento] = 0
-            matriz_teste = mov.mov_down(matriz)
+            mov.mov_down(matriz)
             
             
-        elif movimento == 1:
-            matriz_teste = mov.mov_down(matriz)
-            if self.check_matrizes_iguais(matriz, lista_matrizes):
+        if movimento == 1:
+            mov.mov_down(matriz)
+            if self.check_matrizes_iguais(matriz, lista_matrizes) or self.check_zero_invalido(matriz, lista_matrizes):
                 list_valor[movimento] = 0 
-            matriz_teste = mov.mov_up(matriz)
+            mov.mov_up(matriz)
             
 
-        elif movimento == 2:
-            matriz_teste = mov.mov_right(matriz)
-            if self.check_matrizes_iguais(matriz, lista_matrizes):
+        if movimento == 2:
+            mov.mov_right(matriz)
+            if self.check_matrizes_iguais(matriz, lista_matrizes) or self.check_zero_invalido(matriz, lista_matrizes):
                 list_valor[movimento] = 0
-            matriz_teste = mov.mov_left(matriz)
+            mov.mov_left(matriz)
             
         
-        elif movimento == 3:
-            matriz_teste = mov.mov_left(matriz)
-            if self.check_matrizes_iguais(matriz, lista_matrizes):
+        if movimento == 3:
+            mov.mov_left(matriz)
+            if self.check_matrizes_iguais(matriz, lista_matrizes) or self.check_zero_invalido(matriz, lista_matrizes):
                 list_valor[movimento] = 0
-            matriz_teste = mov.mov_right(matriz)
+            mov.mov_right(matriz)
 
         return list_valor
 
