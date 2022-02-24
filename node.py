@@ -1,4 +1,7 @@
+import numpy as np
+
 END = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+#END = [[1, 2, 3], [8, 0, 4], [7, 6, 5]]
 
 class Node:
     #def __init__(self, no_atual, no_anterior, g, h, dir): # h = numero de peças mal colocadas | g = numero de nos percorridos
@@ -26,7 +29,4 @@ class Node:
     def sum_score_g(self, g):
         self.g += 1
         return self.g
-
-
-
 

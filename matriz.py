@@ -1,4 +1,3 @@
-
 from numpy.random import default_rng
 
 from checagem import Checagem
@@ -9,7 +8,7 @@ mov = Movimento()
 
 class Matriz:
     def __init__(self):
-        self.lista_matriz = []
+        self.backup_matrizes = []
 
     def gera_matriz(self):
         #gera matriz aleatória entre 0 e 8 
@@ -21,9 +20,11 @@ class Matriz:
     def tem_solucao(self, puzzle):
         ninversao = 0
         count = 0
+        puzzle_list = []
 
-        #transforma matriz em lista
-        puzzle_list = puzzle.flatten().tolist()
+        for r in puzzle:
+            for valor in r:
+                puzzle_list.append(valor)
 
         #percorre a lista e calcula quantas inversões de valores existem
         for n in puzzle_list:
@@ -37,31 +38,17 @@ class Matriz:
             return False
         else: return True
 
-    def movimenta_matriz(self, movimento, matriz):
-        # checa qual movimento deve ser feito e executa o movimento
-        if movimento == 0:
-            nova_matriz = mov.mov_up(matriz)
-        elif movimento == 1:
-            nova_matriz = mov.mov_down(matriz)
-        elif movimento == 2:
-            nova_matriz = mov.mov_right(matriz)
-        elif movimento == 3:
-            nova_matriz = mov.mov_left(matriz)
-        
-        # printa o puzzle depois do movimento
-        print("\n_____8-PUZZLE_____\n")
-        self.print_matriz(nova_matriz)
-        #print(f"\nMovimentos: {g}", g)
-
-        return nova_matriz
-
     def print_matriz(self, matriz):
         for row in matriz:
             print ('  '.join(map(str, row)))
     
     #faz uma lista com as todas as matrizes
     def backup_matriz(self, matriz_original):
-        list_matriz = matriz_original.flatten().tolist()
-        self.lista_matriz.append(list_matriz)
+        matriz_em_lista = []
+        for r in matriz_original:
+            for valor in r:
+                matriz_em_lista.append(valor)
+        
+        self.backup_matrizes.append(matriz_em_lista)
 
-        return self.lista_matriz
+        return self.backup_matrizes
